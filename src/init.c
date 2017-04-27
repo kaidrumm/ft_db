@@ -20,7 +20,7 @@ void			add_column(t_table *t, char type, char *name)
 	int			index;
 	t_column	*col;
 
-	printf("Add column\n");
+	printf("Add column %s\n", name);
 	index = first_empty_column(t);
 	if (index < 0)
 		ft_error("Table columns are full\n");

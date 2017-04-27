@@ -20,5 +20,6 @@ clean:
 
 fclean:
 	rm -f $(NAME)
+	make -C libft fclean
 
 re: fclean all

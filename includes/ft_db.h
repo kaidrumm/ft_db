@@ -25,7 +25,6 @@ typedef struct	s_column
 {
 	char		content_type;
 	char		*name;
-	// int			id;
 	void		*content_array;
 }				t_column;
 
