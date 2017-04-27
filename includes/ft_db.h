@@ -36,6 +36,7 @@ typedef struct	s_table
 }				t_table;
 
 void			print_table(t_table *t);
+void			init_table(t_table *t);
 void			add_column(t_table *t, char type, char *name);
 
 #endif

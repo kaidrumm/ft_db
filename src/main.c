@@ -10,7 +10,7 @@ static void add_column_details(t_table *t)
 	char	name[100];
 	char	type[2];
 
-	bzero(name, 100);
+	//bzero(name, 100);
 	ft_putendl("Please type the column name");
 	gets(name);
 	ft_putendl("What type of data is this?");
@@ -39,7 +39,7 @@ int			main(void)
 {
 	t_table		t;
 
-	// init_table(&origin);
+	init_table(&t);
 	while (1)
 		user_interact(&t);
 	return (0);
