@@ -13,25 +13,27 @@ static void	print_headers(t_table *t)
 		c++;
 	}
 	ft_putchar('\n');
-	exit(0);
 }
 
 void		print_table(t_table *t)
 {
 	int			r;
-	// int			c;
+	int			c;
 	// t_column	*current;
 
 	print_headers(t);
 	r = 0;
-	// while (r < TABLE_SIZE)
-	// {
-	// 	c = 0;
-	// 	while (c < TABLE_SIZE)
-	// 	{
-	// 		t->columns[c].content_array[r];
-	// 		c++;
-	// 	}
-	// 	r++;
-	// }
+	while (r < TABLE_SIZE && t->row_ids[r] != 0)
+	{
+		c = 0;
+		while (c < TABLE_SIZE && t->column_ids[c] != 0)
+		{
+			//printf("Trying to print the value at %i, %i\n", r, c);
+			ft_putstr(t->columns[c].content_array[r]);
+			ft_putchar('\t');
+			c++;
+		}
+		r++;
+		ft_putchar('\n');
+	}
 }

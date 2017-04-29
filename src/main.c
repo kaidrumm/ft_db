@@ -1,37 +1,24 @@
 #include "../includes/ft_db.h"
 
-// static int	id_gen(void)
-// {
-// 	return (g_id_counter)
-// }
-
-static void add_column_details(t_table *t)
+char		*ask_user(char *question)
 {
-	char	line[156];
-	char	*name;
+	char	buffer[256];
+	char	*response;
 
-	bzero(line, sizeof(line));
-	ft_putendl("Please type the column name");
-	if (fgets(line, sizeof(line), stdin))
+	response = NULL;
+	bzero(buffer, sizeof(buffer));
+	ft_putendl(question);
+	if (fgets(buffer, sizeof(buffer), stdin))
 	{
-		printf("I heard %s %p\n", line, line);
-		name = strdup(line);
-		printf("It's still %s %p\n", name, name);
-		name = strsep(&name, "\n");
-		printf("I jsut removed the newline on %s\n", name);
-	}
-	bzero(line, sizeof(line));
-	ft_putendl("What type of data is this?");
-	if (fgets(line, sizeof(line), stdin))
-	{
-		printf("We still have the name %s; data type is %c\n", name, line[0]);
-		add_column(t, line[0], name);
+		response = strdup(buffer);
+		response = strsep(&response, "\n");
 	}
 	else
-		ft_error("Error reading input\n");
+		ft_error("Problem with fgets\n");
+	return (response);
 }
 
-static void	user_interact(t_table *t)
+void		menu(t_table *t)
 {
 	char	buf[10];
 	int		option;
@@ -40,8 +27,8 @@ static void	user_interact(t_table *t)
 	option = atoi(fgets(buf, sizeof(buf), stdin));
 	if (option == 1)
 		add_column_details(t);
-	// else if (option == 2)
-	// 	add_row_details(t);
+	else if (option == 2)
+		add_record(t);
 	else if (option == 3)
 		print_table(t);
 	else
@@ -52,8 +39,9 @@ int			main(void)
 {
 	t_table		t;
 
+	g_id_counter = 41;
 	init_table(&t);
 	while (1)
-		user_interact(&t);
+		menu(&t);
 	return (0);
 }
