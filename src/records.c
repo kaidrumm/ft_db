@@ -15,13 +15,20 @@ static int		first_empty_row(t_table *t)
 	return (-1);
 }
 
-// void	add_record_details(t_table *t)
-// {
-// 	char	*name;
+void	add_record_from_file(t_table *t, int r, char **list)
+{
+	int		c;
 
-// 	name = ask_user("Please type the record name");
-// 	add_record(t, name);
-// }
+	printf("Adding record %i\n", r);
+	c = 0;
+	while (list[c])
+	{
+		t->row_ids[r] = id_gen();
+		t->columns[c].content_array[r] = ft_strdup(list[c]);
+		printf("Assigned %s to %i, %i\n", t->columns[c].content_array[r], r, c);
+		c++;
+	}
+}
 
 void	add_record(t_table *t)
 {

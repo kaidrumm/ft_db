@@ -1,12 +1,5 @@
 #include "../includes/ft_db.h"
 
-void		graceful_exit(t_table *t)
-{
-	if (t->columns != NULL)
-		free(t->columns);
-	exit(0);
-}
-
 char		*ask_user(char *question)
 {
 	char	buffer[256];
@@ -37,24 +30,36 @@ void		menu(t_table *t)
 	else if (option == 2)
 		add_record(t);
 	else if (option == 3)
-		print_table(t);
+		print_table(t, 1);
 	else if (option == 4)
+	{
+		print_table(t, 4);
 		graceful_exit(t);
+	}
 	else
 		ft_putendl("Sorry, that option isn't covered yet\n");
 }
 
-void		load_from_file(t_table *t, char *filename)
+// void		save_to_file(t_table *t, FILE *fp, char *filename)
+// {
+// 	FILE	*output;
+
+// 	output = fopen(g_filename, "w");
+
+	
+
+// }
+
+void		load_from_file(t_table *t)
 {
 	FILE	*file_ptr;
 	char	*line;
 	char 	**list;
-	//int		r;
+	int		r;
 	int		c;
 
-	if (!(file_ptr = fopen(filename, "r+")))
+	if (!(file_ptr = fopen(g_filename, "r+")))
 		ft_error("Error opening file\n");
-	// Create headers (columns)
 	if (get_next_line(fileno(file_ptr), &line))
 	{
 		list = ft_strsplit(line, ',');
@@ -65,17 +70,15 @@ void		load_from_file(t_table *t, char *filename)
 			c++;
 		}
 	}
-
-	// // Load records (rows)
-	// while (get_next_line(file_ptr, &line))
-	// {
-	// 	r = 0;
-	// 	while (line[r])
-	// 	{
-	// 		while ()
-	// 	}
-	// }
-
+	r = 0;
+	while (get_next_line(fileno(file_ptr), &line))
+	{
+		printf("Loaded line %s\n", line);
+		list = ft_strsplit(line, ',');
+		add_record_from_file(t, r, list);
+		r++;
+	}
+	fclose(file_ptr);
 }
 
 int			main(int ac, char **av)
@@ -85,7 +88,12 @@ int			main(int ac, char **av)
 	g_id_counter = 41;
 	init_table(&t);
 	if (ac == 2)
-		load_from_file(&t, av[1]);
+	{
+		g_filename = av[1];
+		load_from_file(&t);
+	}
+	else
+		g_filename = "ft_db.txt";
 	while (1)
 		menu(&t);
 	return (0);

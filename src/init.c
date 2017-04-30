@@ -1,5 +1,12 @@
 #include "../includes/ft_db.h"
 
+void			graceful_exit(t_table *t)
+{
+	if (t->columns != NULL)
+		free(t->columns);
+	exit(0);
+}
+
 int				id_gen(void)
 {
 	g_id_counter++;

@@ -54,5 +54,4 @@ void			add_column(t_table *t, char type, char *name)
 		col->content_array = malloc(sizeof(t_date) * TABLE_SIZE);
 	else
 		ft_error("Content type not available\n");
-	col->name = name;
 }
