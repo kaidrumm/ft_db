@@ -34,22 +34,16 @@ void			add_column(t_table *t, char type, char *name)
 	index = first_empty_column(t);
 	if (index < 0)
 		ft_error("Table columns are full\n");
-	t->column_ids[index] = id_gen();
-	printf("Assigned id %i to column %i\n", t->column_ids[index], index);
+	t->column_ids[index] = id_gen_c();
 	col = &(t->columns[index]);
-	printf("Column pointer %p\n", col);
 	col->content_type = type;
 	col->name = name;
-	printf("Column type is %c and name is %s\n", col->content_type, col->name);
 	if (type == 'i')
 		col->content_array = malloc(sizeof(int) * TABLE_SIZE);
 	else if (type == 'c')
 		col->content_array = malloc(sizeof(char) * TABLE_SIZE);
 	else if (type == 's')
-	{
-		printf("It's a string\n");
 		col->content_array = malloc(sizeof(char *) * TABLE_SIZE);
-	}
 	else if (type == 'd')
 		col->content_array = malloc(sizeof(t_date) * TABLE_SIZE);
 	else

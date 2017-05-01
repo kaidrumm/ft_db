@@ -28,12 +28,15 @@ void			add_record_from_file(t_table *t, int r, char **list)
 	int		c;
 
 	printf("Adding record %i\n", r);
-	c = 0;
+	if (list[0] == 0)
+		t->row_ids[r] = id_gen_r();
+	else
+		t->row_ids[r] = ft_atoi(list[0]);
+	c = 1;
 	while (list[c])
 	{
-		t->row_ids[r] = id_gen();
-		t->columns[c].content_array[r] = ft_strdup(list[c]);
-		printf("Assigned %s to %i, %i\n", t->columns[c].content_array[r], r, c);
+		t->columns[c - 1].content_array[r] = ft_strdup(list[c]);
+		printf("Assigned %s to %i, %i\n", t->columns[c - 1].content_array[r], r, c);
 		c++;
 	}
 }
@@ -47,7 +50,7 @@ void			add_record(t_table *t)
 
 	i = 0;
 	j = first_empty_row(t);
-	t->row_ids[j] = id_gen();
+	t->row_ids[j] = id_gen_r();
 	printf("Assigned ID %i to row %i\n", t->row_ids[j], j);
 	while (i < TABLE_SIZE && t->column_ids[i] > 0)
 	{

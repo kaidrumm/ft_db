@@ -65,7 +65,7 @@ void		load_from_file(t_table *t)
 	if (get_next_line(fileno(file_ptr), &line))
 	{
 		list = ft_strsplit(line, ',');
-		c = 0;
+		c = 1; // Skip ID column
 		while (list[c])
 		{
 			add_column(t, 's', list[c]);
@@ -87,7 +87,8 @@ int			main(int ac, char **av)
 {
 	t_table		t;
 
-	g_id_counter = 41;
+	g_row_counter = 0;
+	g_col_counter = 0;
 	init_table(&t);
 	if (ac == 2)
 	{

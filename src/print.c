@@ -9,7 +9,6 @@ static void	print_headers(t_table *t, FILE *fp)
 		fp = stdout;
 	fd = fileno(fp);
 	c = 0;
-	ft_putstr_fd("Row,", fd);
 	while (c < TABLE_SIZE && (t->column_ids[c] != 0))
 	{
 		ft_putstr_fd(t->columns[c].name, fd);
@@ -37,7 +36,7 @@ void		print_table(t_table *t, int fd)
 	while (r < TABLE_SIZE && t->row_ids[r] != 0)
 	{
 		c = 0;
-		ft_putstr_fd(ft_itoa(r), fd);
+		ft_putstr_fd(ft_itoa(t->row_ids[r]), fd);
 		ft_putchar_fd(',', fd);
 		while (c < TABLE_SIZE && t->column_ids[c] != 0)
 		{

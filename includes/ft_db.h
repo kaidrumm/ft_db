@@ -11,7 +11,8 @@
 
 # define TABLE_SIZE 100
 
-int 			g_id_counter;
+int 			g_row_counter;
+int				g_col_counter;
 char			*g_filename;
 
 typedef struct	s_date
@@ -38,7 +39,8 @@ typedef struct	s_table
 }				t_table;
 
 void			graceful_exit(t_table *t);
-int				id_gen(void);
+int				id_gen_c(void);
+int				id_gen_r(void);
 void			print_table(t_table *t, int fd);
 void			init_table(t_table *t);
 void 			add_column_details(t_table *t);
