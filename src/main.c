@@ -96,7 +96,7 @@ int			main(int ac, char **av)
 		load_from_file(&t);
 	}
 	else
-		g_filename = "ft_db.txt";
+		g_filename = "ft_db.csv";
 	while (1)
 		menu(&t);
 	return (0);

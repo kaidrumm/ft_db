@@ -8,7 +8,7 @@ void			delete_record(t_table *t)
 
 	record_string = ask_user("What is the ID of the record you'd like to update?\n");
 	ID = find_matching_record(t, atoi(record_string));
-	t->row_ids[ID] = 0;
+	t->row_ids[ID] = -1;
 	c = 0;
 	while (t->column_ids[c])
 	{

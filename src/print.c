@@ -35,6 +35,11 @@ void		print_table(t_table *t, int fd)
 	r = 0;
 	while (r < TABLE_SIZE && t->row_ids[r] != 0)
 	{
+		if (t->row_ids[r] < 0)
+		{
+			r++;
+			continue ;
+		}
 		c = 0;
 		ft_putstr_fd(ft_itoa(t->row_ids[r]), fd);
 		ft_putchar_fd(',', fd);
