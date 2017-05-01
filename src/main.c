@@ -23,15 +23,27 @@ void		menu(t_table *t)
 	char	buf[10];
 	int		option;
 
-	ft_putendl("What operation would you like to perform?\n\t[1] Add Column \n\t[2] Add Record\n\t[3] Print Table\n\t[4] Exit");
+	ft_putendl("What operation would you like to perform?\n\t"
+		"[1] Add Column \n\t"
+		"[2] Add Record\n\t"
+		"[3] Update Value\n\t"
+		"[4] Delete Record\n\t"
+		"[5] Print Table\n\t"
+		"[6] Exit");
 	option = atoi(fgets(buf, sizeof(buf), stdin));
 	if (option == 1)
 		add_column_details(t);
 	else if (option == 2)
 		add_record(t);
-	else if (option == 3)
+	// else if (option == 3)
+	// 	update_value(t);
+	// else if (option == 4)
+	// 	delete_record(t);
+	else if (option == 5)
 		print_table(t, 1);
-	else if (option == 4)
+	// else if (option == 6)
+	// 	simple_request(t);
+	else if (option == 6)
 	{
 		print_table(t, 4);
 		graceful_exit(t);
@@ -39,16 +51,6 @@ void		menu(t_table *t)
 	else
 		ft_putendl("Sorry, that option isn't covered yet\n");
 }
-
-// void		save_to_file(t_table *t, FILE *fp, char *filename)
-// {
-// 	FILE	*output;
-
-// 	output = fopen(g_filename, "w");
-
-	
-
-// }
 
 void		load_from_file(t_table *t)
 {

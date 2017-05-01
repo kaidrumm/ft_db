@@ -1,5 +1,13 @@
 #include "../includes/ft_db.h"
 
+// void			update_value(int r, int c, char *new)
+// {
+	
+// 	char	*newvalue;
+
+// 	newvalue = ask_user()
+// }
+
 static int		first_empty_row(t_table *t)
 {
 	int		j;
@@ -15,7 +23,7 @@ static int		first_empty_row(t_table *t)
 	return (-1);
 }
 
-void	add_record_from_file(t_table *t, int r, char **list)
+void			add_record_from_file(t_table *t, int r, char **list)
 {
 	int		c;
 
@@ -30,7 +38,7 @@ void	add_record_from_file(t_table *t, int r, char **list)
 	}
 }
 
-void	add_record(t_table *t)
+void			add_record(t_table *t)
 {
 	int		i;
 	int		j;
