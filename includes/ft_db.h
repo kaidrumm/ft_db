@@ -38,6 +38,10 @@ typedef struct	s_table
 	t_column	*columns;
 }				t_table;
 
+int				find_matching_record(t_table *t, int id);
+int				find_matching_column(t_table *t, char *name);
+void			delete_record(t_table *t);
+void			update_value(t_table *t);
 void			graceful_exit(t_table *t);
 int				id_gen_c(void);
 int				id_gen_r(void);

@@ -35,10 +35,10 @@ void		menu(t_table *t)
 		add_column_details(t);
 	else if (option == 2)
 		add_record(t);
-	// else if (option == 3)
-	// 	update_value(t);
-	// else if (option == 4)
-	// 	delete_record(t);
+	else if (option == 3)
+		update_value(t);
+	else if (option == 4)
+		delete_record(t);
 	else if (option == 5)
 		print_table(t, 1);
 	// else if (option == 6)

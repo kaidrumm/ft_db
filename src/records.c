@@ -1,12 +1,47 @@
 #include "../includes/ft_db.h"
 
-// void			update_value(int r, int c, char *new)
-// {
-	
-// 	char	*newvalue;
+void			delete_record(t_table *t)
+{
+	char	*record_string;
+	int		ID;
+	int		c;
 
-// 	newvalue = ask_user()
-// }
+	record_string = ask_user("What is the ID of the record you'd like to update?\n");
+	ID = find_matching_record(t, atoi(record_string));
+	t->row_ids[ID] = 0;
+	c = 0;
+	while (t->column_ids[c])
+	{
+		t->columns[c].content_array[ID] = NULL;
+		c++;
+	}
+}
+
+void			update_value(t_table *t)
+{
+	char	*ID_name;
+	char	*column_name;
+	char	*newvalue;
+	int		row_id;
+	int		column_number;
+
+	ID_name = ask_user("Please type the ID of the record you'd like to update\n");
+	column_name = ask_user("Which column would you like to update? Please type the exact name\n");
+	newvalue = ask_user("What new value would you like to insert?\n");
+	row_id = find_matching_record(t, atoi(ID_name));
+	if (row_id == -1)
+	{
+		printf("Sorry, that isn't a valid record ID\n");
+		return ;
+	}
+	column_number = find_matching_column(t, column_name);
+	if (column_number == -1)
+	{
+		printf("Sorry, that isn't a valid record ID\n");
+		return ;
+	}
+	t->columns[column_number].content_array[row_id] = ft_strdup(newvalue);
+}
 
 static int		first_empty_row(t_table *t)
 {
