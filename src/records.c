@@ -17,6 +17,20 @@ void			delete_record(t_table *t)
 	}
 }
 
+int				find_matching_record(t_table *t, int id)
+{
+	int		index;
+
+	index = 0;
+	while (t->row_ids[index])
+	{
+		if (t->row_ids[index] == id)
+			return (index);
+		index++;
+	}
+	return (-1);
+}
+
 void			update_value(t_table *t)
 {
 	char	*ID_name;
@@ -58,21 +72,30 @@ static int		first_empty_row(t_table *t)
 	return (-1);
 }
 
-void			add_record_from_file(t_table *t, int r, char **list)
+void			add_record_from_file(t_table *t, int r, char **list, char *option)
 {
 	int		c;
+	int		l;
 
 	printf("Adding record %i\n", r);
-	if (list[0] == 0)
-		t->row_ids[r] = id_gen_r();
-	else
-		t->row_ids[r] = ft_atoi(list[0]);
-	c = 1;
-	while (list[c])
+	if (!ft_strcmp(option, "N"))
 	{
-		t->columns[c - 1].content_array[r] = ft_strdup(list[c]);
-		printf("Assigned %s to %i, %i\n", t->columns[c - 1].content_array[r], r, c);
+		t->row_ids[r] = id_gen_r();
+		l = 0;
+	}
+	else 
+	{
+		t->row_ids[r] = ft_atoi(list[0]);
+		l = 1;
+	}
+	printf("Assigned ID %i to row %i\n", t->row_ids[r], r);
+	c = 0;
+	while (list[l])
+	{
+		t->columns[c].content_array[r] = ft_strdup(list[l]);
+		printf("Assigned %s to %i, %i\n", t->columns[c].content_array[r], r, c);
 		c++;
+		l++;
 	}
 }
 

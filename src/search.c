@@ -1,29 +1,27 @@
 #include "../includes/ft_db.h"
 
-int		find_matching_record(t_table *t, int id)
+void		print_matching_records(t_table *t, int col, char *value)
 {
-	int		index;
+	int		r;
 
-	index = 0;
-	while (t->row_ids[index])
+	print_headers(t, stdin);
+	r = 0;
+	while (t->row_ids[r])
 	{
-		if (t->row_ids[index] == id)
-			return (index);
-		index++;
+		if (ft_strcmp(t->columns[col].content_array[r], value) == 0)
+			print_row(t, 1, r);
+		r++;
 	}
-	return (-1);
 }
 
-int		find_matching_column(t_table *t, char *name)
+void		search_query(t_table *t)
 {
-	int		index;
+	char	*column;
+	int		col_index;
+	char	*value;
 
-	index = 0;
-	while (t->column_ids[index])
-	{
-		if (ft_strcmp(t->columns[index].name, name) == 0)
-			return (index);
-		index++;
-	}
-	return (-1);
+	column = ask_user("Which column do you want to search on?\n");
+	col_index = find_matching_column(t, column);
+	value = ask_user("Which value are you searching for?\n");
+
 }

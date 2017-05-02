@@ -1,6 +1,6 @@
 #include "../includes/ft_db.h"
 
-static void	print_headers(t_table *t, FILE *fp)
+void		print_headers(t_table *t, FILE *fp)
 {
 	int		c;
 	int		fd;
@@ -18,10 +18,27 @@ static void	print_headers(t_table *t, FILE *fp)
 	ft_putchar_fd('\n', fd);
 }
 
+void		print_row(t_table *t, int fd, int r)
+{
+	int		c;
+
+	c = 0;
+	ft_putstr_fd(ft_itoa(t->row_ids[r]), fd);
+	ft_putchar_fd(',', fd);
+	while (c < TABLE_SIZE && t->column_ids[c] != 0)
+	{
+		//printf("Trying to print the value at %i, %i\n", r, c);
+		ft_putstr_fd(t->columns[c].content_array[r], fd);
+		ft_putchar_fd(',', fd);
+		c++;
+	}
+	r++;
+	ft_putchar_fd('\n', fd);
+}
+
 void		print_table(t_table *t, int fd)
 {
 	int			r;
-	int			c;
 	FILE		*output;
 
 	if (fd == 1)
@@ -35,22 +52,20 @@ void		print_table(t_table *t, int fd)
 	r = 0;
 	while (r < TABLE_SIZE && t->row_ids[r] != 0)
 	{
-		if (t->row_ids[r] < 0)
-		{
-			r++;
-			continue ;
-		}
-		c = 0;
-		ft_putstr_fd(ft_itoa(t->row_ids[r]), fd);
-		ft_putchar_fd(',', fd);
-		while (c < TABLE_SIZE && t->column_ids[c] != 0)
-		{
-			//printf("Trying to print the value at %i, %i\n", r, c);
-			ft_putstr_fd(t->columns[c].content_array[r], fd);
-			ft_putchar_fd(',', fd);
-			c++;
-		}
+		if (t->row_ids[r] > 0)
+			print_row(t, fd, r);
 		r++;
-		ft_putchar_fd('\n', fd);
+		// c = 0;
+		// ft_putstr_fd(ft_itoa(t->row_ids[r]), fd);
+		// ft_putchar_fd(',', fd);
+		// while (c < TABLE_SIZE && t->column_ids[c] != 0)
+		// {
+		// 	//printf("Trying to print the value at %i, %i\n", r, c);
+		// 	ft_putstr_fd(t->columns[c].content_array[r], fd);
+		// 	ft_putchar_fd(',', fd);
+		// 	c++;
+		// }
+		// r++;
+		// ft_putchar_fd('\n', fd);
 	}
 }

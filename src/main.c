@@ -52,7 +52,7 @@ void		menu(t_table *t)
 		ft_putendl("Sorry, that option isn't covered yet\n");
 }
 
-void		load_from_file(t_table *t)
+void		load_from_file(t_table *t, char *option)
 {
 	FILE	*file_ptr;
 	char	*line;
@@ -77,7 +77,7 @@ void		load_from_file(t_table *t)
 	{
 		printf("Loaded line %s\n", line);
 		list = ft_strsplit(line, ',');
-		add_record_from_file(t, r, list);
+		add_record_from_file(t, r, list, option);
 		r++;
 	}
 	fclose(file_ptr);
@@ -90,10 +90,10 @@ int			main(int ac, char **av)
 	g_row_counter = 0;
 	g_col_counter = 0;
 	init_table(&t);
-	if (ac == 2)
+	if (ac == 3)
 	{
 		g_filename = av[1];
-		load_from_file(&t);
+		load_from_file(&t, av[2]);
 	}
 	else
 		g_filename = "ft_db.csv";
