@@ -11,6 +11,7 @@ int		find_matching_column(t_table *t, char *name)
 			return (index);
 		index++;
 	}
+	printf("I didn't find a column matching that name\n");
 	return (-1);
 }
 

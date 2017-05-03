@@ -37,6 +37,7 @@ typedef struct	s_table
 	t_column	*columns;
 }				t_table;
 
+void			search_query(t_table *t);
 int				find_matching_record(t_table *t, int id);
 int				find_matching_column(t_table *t, char *name);
 void			delete_record(t_table *t);
