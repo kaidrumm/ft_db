@@ -6,7 +6,7 @@
 /*   By: kdrumm <kdrumm@student.42.us>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 10:58:49 by kdrumm            #+#    #+#             */
-/*   Updated: 2017/05/05 16:00:55 by kdrumm           ###   ########.us       */
+/*   Updated: 2017/05/05 16:18:41 by kdrumm           ###   ########.us       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define FT_DB_H
 
 # include "../libft/libft.h"
+# include <limits.h>
 # include <fcntl.h>
 # include <sys/types.h>
 # include <stdlib.h>
@@ -51,8 +52,8 @@ typedef struct	s_table
 }				t_table;
 
 
-int				id_gen_c(void);
-int				id_gen_r(void);
+int				id_gen_c(t_table *t);
+int				id_gen_r(t_table *t);
 void			menu(t_table *t);
 void			usage(t_table *t);
 void			init_table(t_table *t);

@@ -6,7 +6,7 @@
 /*   By: kdrumm <kdrumm@student.42.us>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 10:58:49 by kdrumm            #+#    #+#             */
-/*   Updated: 2017/05/05 16:03:39 by kdrumm           ###   ########.us       */
+/*   Updated: 2017/05/05 16:19:22 by kdrumm           ###   ########.us       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ static void		read_ids(t_table *t, char **list, int r)
 	else if (*errptr != '\0')
 		ft_error("ID out of range\n");
 	id = ft_atoi(list[0]);
+	if (id > INT_MAX || id < 0)
+		ft_error("ID out of range, please use integer IDs\n");
 	t->row_ids[r] = id;
 	if (id > g_row_counter)
 		g_row_counter = id;
@@ -66,7 +68,7 @@ void			add_record_from_file(t_table *t, int r, char **list, int option)
 
 	l = 0;
 	if (option == 0)
-		t->row_ids[r] = id_gen_r();
+		t->row_ids[r] = id_gen_r(t);
 	else
 	{
 		read_ids(t, list, r);
@@ -101,7 +103,7 @@ void			add_record(t_table *t)
 		ft_putstr("All rows are full\n");
 		return ;
 	}
-	t->row_ids[j] = id_gen_r();
+	t->row_ids[j] = id_gen_r(t);
 	while (i < g_width && t->column_ids[i] > 0)
 	{
 		title = t->columns[i].name;

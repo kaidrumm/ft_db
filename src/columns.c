@@ -6,7 +6,7 @@
 /*   By: kdrumm <kdrumm@student.42.us>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 10:58:57 by kdrumm            #+#    #+#             */
-/*   Updated: 2017/05/05 15:51:23 by kdrumm           ###   ########.us       */
+/*   Updated: 2017/05/05 16:19:31 by kdrumm           ###   ########.us       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void			add_column(t_table *t, char *name)
 		ft_putstr("Columns are full\n");
 		return ;
 	}
-	t->column_ids[index] = id_gen_c();
+	t->column_ids[index] = id_gen_c(t);
 	col = &(t->columns[index]);
 	col->name = name;
 	col->content_array = (char **)malloc(sizeof(char *) * TABLE_SIZE);

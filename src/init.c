@@ -6,7 +6,7 @@
 /*   By: kdrumm <kdrumm@student.42.us>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/04 20:29:40 by kdrumm            #+#    #+#             */
-/*   Updated: 2017/05/05 15:26:58 by kdrumm           ###   ########.us       */
+/*   Updated: 2017/05/05 16:20:16 by kdrumm           ###   ########.us       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,23 @@ void			graceful_exit(t_table *t)
 	exit(0);
 }
 
-int				id_gen_r(void)
+int				id_gen_r(t_table *t)
 {
+	if (g_row_counter == INT_MAX)
+	{
+		ft_putstr("Error, Row IDs have gone out of int range.\n");
+		graceful_exit(t);
+	}
 	return (++g_row_counter);
 }
 
-int				id_gen_c(void)
+int				id_gen_c(t_table *t)
 {
+	if (g_row_counter == INT_MAX)
+	{
+		ft_putstr("Error, Column IDs have gone out of int range.");
+		graceful_exit(t);
+	}
 	return (++g_col_counter);
 }
 
