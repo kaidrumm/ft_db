@@ -6,7 +6,7 @@
 /*   By: kdrumm <kdrumm@student.42.us>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 10:58:57 by kdrumm            #+#    #+#             */
-/*   Updated: 2017/05/05 15:09:33 by kdrumm           ###   ########.us       */
+/*   Updated: 2017/05/05 15:51:23 by kdrumm           ###   ########.us       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,29 +23,6 @@ void			delete_column(t_table *t)
 		return ;
 	t->column_ids[c] = -1;
 	fill_with_zeros(t, c);
-}
-
-int				find_matching_column(t_table *t, char *name)
-{
-	int		index;
-
-	index = 0;
-	while (t->column_ids[index])
-	{
-		if (ft_strcmp(t->columns[index].name, name) == 0)
-			return (index);
-		index++;
-	}
-	printf("I didn't find a column matching that name\n");
-	return (-1);
-}
-
-void 			add_column_details(t_table *t)
-{
-	char	*name;
-
-	name = ask_user("Please type the column name");
-	add_column(t, name);
 }
 
 static int		first_empty_column(t_table *t)
@@ -80,10 +57,9 @@ void			add_column(t_table *t, char *name)
 	t_column	*col;
 
 	index = first_empty_column(t);
-	// printf("Adding column %s at %i\n", name, index);
 	if (index < 0)
 	{
-		printf("Columns are full\n");
+		ft_putstr("Columns are full\n");
 		return ;
 	}
 	t->column_ids[index] = id_gen_c();

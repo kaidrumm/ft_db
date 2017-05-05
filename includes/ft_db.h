@@ -6,7 +6,7 @@
 /*   By: kdrumm <kdrumm@student.42.us>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 10:58:49 by kdrumm            #+#    #+#             */
-/*   Updated: 2017/05/05 15:21:14 by kdrumm           ###   ########.us       */
+/*   Updated: 2017/05/05 16:00:55 by kdrumm           ###   ########.us       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@
 
 int				g_width;
 int				g_height;
-int 			g_row_counter;
-int				g_col_counter;
+long 			g_row_counter;
+long			g_col_counter;
 char			*g_filename;
 
 typedef struct	s_date
@@ -63,9 +63,8 @@ void			delete_column(t_table *t);
 void			delete_record(t_table *t);
 void			graceful_exit(t_table *t);
 char			*ask_user(char *question);
-void			load_from_file(t_table *t);
+// void			load_from_file(t_table *t);
 int				ask_user_yn(char *question);
-void 			add_column_details(t_table *t);
 void			print_table(t_table *t, int fd);
 void			add_column(t_table *t, char *name);
 void			fill_with_zeros(t_table *t, int c);

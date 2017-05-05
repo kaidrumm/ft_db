@@ -6,7 +6,7 @@
 /*   By: kdrumm <kdrumm@student.42.us>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 11:21:22 by kdrumm            #+#    #+#             */
-/*   Updated: 2017/05/05 15:25:03 by kdrumm           ###   ########.us       */
+/*   Updated: 2017/05/05 16:06:33 by kdrumm           ###   ########.us       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void		usage(t_table *t)
 {
-	printf("\nUsage:\n"
+	ft_putstr("\nUsage:\n"
 		"./ft_db -h -w -f\n"
 		"-h height (in integer range)\n"
 		"-w width (in integer range)\n"
@@ -30,7 +30,6 @@ char		*ask_user(char *question)
 	char	buffer[256];
 	char	*response;
 
-	// printf("ask user\n");
 	response = NULL;
 	bzero(buffer, sizeof(buffer));
 	ft_putendl(question);
@@ -41,7 +40,6 @@ char		*ask_user(char *question)
 	}
 	else
 		ft_error("Problem with fgets\n");
-	// printf("response was %s in ask_user\n", response);
 	return (response);
 }
 
@@ -49,11 +47,9 @@ int			ask_user_yn(char *question)
 {
 	char	*response;
 
-	// printf("ask yn\n");
 	while (1)
 	{
 		response = ask_user(question);
-		// printf("Response was %s\n", response);
 		if (strcmp(response, "Y") == 0 || strcmp(response, "yes") == 0 \
 			|| strcmp(response, "y") == 0 || strcmp(response, "Yes") == 0)
 			return (1);
@@ -66,7 +62,7 @@ int			ask_user_yn(char *question)
 	return (-1);
 }
 
-void		menu(t_table *t)
+static int	offer_menu(t_table *t)
 {
 	char	buf[10];
 	int		option;
@@ -83,8 +79,21 @@ void		menu(t_table *t)
 		"[9] Help\n\t"
 		"[10] Flee\n\t");
 	option = atoi(fgets(buf, sizeof(buf), stdin));
+	if (option == 8)
+	{
+		print_table(t, 4);
+		graceful_exit(t);
+	}
+	return (option);
+}
+
+void		menu(t_table *t)
+{
+	int		option;
+
+	option = offer_menu(t);
 	if (option == 1)
-		add_column_details(t);
+		add_column(t, ask_user("Please type the column name"));
 	else if (option == 2)
 		add_record(t);
 	else if (option == 3)
@@ -98,10 +107,7 @@ void		menu(t_table *t)
 	else if (option == 7)
 		print_table(t, 1);
 	else if (option == 8)
-	{
-		print_table(t, 4);
-		graceful_exit(t);
-	}
+		;
 	else if (option == 9)
 		usage(t);
 	else if (option == 10)
