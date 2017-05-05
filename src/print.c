@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   print.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kdrumm <kdrumm@student.42.us>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/05/05 10:58:49 by kdrumm            #+#    #+#             */
+/*   Updated: 2017/05/05 13:52:57 by kdrumm           ###   ########.us       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/ft_db.h"
 
 void		print_headers(t_table *t, FILE *fp)
@@ -8,9 +20,9 @@ void		print_headers(t_table *t, FILE *fp)
 	if (!fp)
 		fp = stdout;
 	fd = fileno(fp);
-	ft_putstr_fd("ID,", fd);
+	ft_putstr_fd("\nID,", fd);
 	c = 0;
-	while (c < TABLE_SIZE && (t->column_ids[c] != 0))
+	while (c < g_width && (t->column_ids[c] != 0))
 	{
 		if (t->column_ids[c] == -1)
 		{
@@ -31,14 +43,13 @@ void		print_row(t_table *t, int fd, int r)
 	c = 0;
 	ft_putstr_fd(ft_itoa(t->row_ids[r]), fd);
 	ft_putchar_fd(',', fd);
-	while (c < TABLE_SIZE && t->column_ids[c] != 0)
+	while (c < g_width && t->column_ids[c] != 0)
 	{
 		if (t->column_ids[c] == -1)
 		{
 			c++;
 			continue ;
 		}
-		//printf("Trying to print the value at %i, %i\n", r, c);
 		if (t->columns[c].content_array[r] == NULL)
 			ft_putstr_fd("0", fd);
 		else
@@ -64,7 +75,7 @@ void		print_table(t_table *t, int fd)
 	}
 	print_headers(t, output);
 	r = 0;
-	while (r < TABLE_SIZE && t->row_ids[r] != 0)
+	while (r < g_height && t->row_ids[r] != 0)
 	{
 		if (t->row_ids[r] > 0)
 			print_row(t, fd, r);

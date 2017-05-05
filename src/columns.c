@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   columns.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kdrumm <kdrumm@student.42.us>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/05/05 10:58:57 by kdrumm            #+#    #+#             */
+/*   Updated: 2017/05/05 11:11:52 by kdrumm           ###   ########.us       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/ft_db.h"
 
 void			delete_column(t_table *t)
@@ -5,7 +17,7 @@ void			delete_column(t_table *t)
 	char	*response;
 	int		c;
 
-	response = ask_user("Which column would you like to delete?\n");
+	response = ask_user("Which column would you like to delete?");
 	c = find_matching_column(t, response);
 	if (c == -1)
 		return ;
@@ -31,11 +43,9 @@ int				find_matching_column(t_table *t, char *name)
 void 			add_column_details(t_table *t)
 {
 	char	*name;
-	char	*datatype;
 
 	name = ask_user("Please type the column name");
-	datatype = ask_user("What type of data is this?");
-	add_column(t, datatype[0], name);
+	add_column(t, name);
 }
 
 static int		first_empty_column(t_table *t)
@@ -64,7 +74,7 @@ void			fill_with_zeros(t_table *t, int c)
 	}
 }
 
-void			add_column(t_table *t, char type, char *name)
+void			add_column(t_table *t, char *name)
 {
 	int			index;
 	t_column	*col;
@@ -73,19 +83,8 @@ void			add_column(t_table *t, char type, char *name)
 	if (index < 0)
 		ft_error("Table columns are full\n");
 	t->column_ids[index] = id_gen_c();
-	printf("Add column %s with id %i\n", name, t->column_ids[index]);
 	col = &(t->columns[index]);
-	col->content_type = type;
 	col->name = name;
-	if (type == 'i')
-		col->content_array = malloc(sizeof(int) * TABLE_SIZE);
-	else if (type == 'c')
-		col->content_array = malloc(sizeof(char) * TABLE_SIZE);
-	else if (type == 's')
-		col->content_array = malloc(sizeof(char *) * TABLE_SIZE);
-	else if (type == 'd')
-		col->content_array = malloc(sizeof(t_date) * TABLE_SIZE);
-	else
-		ft_error("Content type not available\n");
+	col->content_array = (char **)malloc(sizeof(char *) * TABLE_SIZE);
 	fill_with_zeros(t, index);
 }

@@ -1,45 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kdrumm <kdrumm@student.42.us>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/05/05 10:59:09 by kdrumm            #+#    #+#             */
+/*   Updated: 2017/05/05 13:53:45 by kdrumm           ###   ########.us       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/ft_db.h"
 
-
-void		menu(t_table *t)
-{
-	char	buf[10];
-	int		option;
-
-	ft_putendl("What operation would you like to perform?\n\t"
-		"[1] Add Column \n\t"
-		"[2] Add Record\n\t"
-		"[3] Update Value\n\t"
-		"[4] Delete Record\n\t"
-		"[5] Delete Column\n\t"
-		"[6] Search by Value\n\t"
-		"[7] Print Table\n\t"
-		"[8] Exit");
-	option = atoi(fgets(buf, sizeof(buf), stdin));
-	if (option == 1)
-		add_column_details(t);
-	else if (option == 2)
-		add_record(t);
-	else if (option == 3)
-		update_value(t);
-	else if (option == 4)
-		delete_record(t);
-	else if (option == 5)
-		delete_column(t);
-	else if (option == 6)
-		search_query(t);
-	else if (option == 7)
-		print_table(t, 1);
-	else if (option == 8)
-	{
-		print_table(t, 4);
-		graceful_exit(t);
-	}
-	else
-		ft_putendl("Sorry, that option isn't covered yet\n");
-}
-
-void		load_from_file(t_table *t)
+void			load_from_file(t_table *t)
 {
 	FILE	*file_ptr;
 	char	*line;
@@ -50,11 +23,10 @@ void		load_from_file(t_table *t)
 
 	if (!(file_ptr = fopen(g_filename, "r+")))
 		ft_error("Error opening file\n");
-	option = ask_user_yn("Does this sheet have an ID column on the left? Y or N\n");
-	printf("I heard option %i\n", option);
+	option = ask_user_yn("Does this sheet have an ID column on the left?");
 	if (option == 0)
 	{
-		printf("We will generate the primary key for you.\n");
+		printf("We will generate IDs for you\n");
 		c = 0;
 	}
 	else
@@ -64,34 +36,64 @@ void		load_from_file(t_table *t)
 		list = ft_strsplit(line, ',');
 		while (list[c])
 		{
-			add_column(t, 's', list[c]);
+			add_column(t, list[c]);
 			c++;
 		}
 	}
 	r = 0;
 	while (get_next_line(fileno(file_ptr), &line))
 	{
-		printf("Loaded line %s\n", line);
 		list = ft_strsplit(line, ',');
 		add_record_from_file(t, r, list, option);
 		r++;
+		if (r > g_width)
+		{
+			printf("Sorry, there are too many rows to load\n");
+			break ;
+		}
 	}
-	//g_row_counter = r;
 	fclose(file_ptr);
 }
 
-int			main(int ac, char **av)
+static void		parse_arguments(int ac, char **av)
+{
+	int			i;
+
+	i = 1;
+	while (i < ac)
+	{
+		if (ft_strcmp(av[i], "-h") == 0)
+			usage();
+		else if (ft_strcmp(av[i], "-f") == 0)
+			g_filename = av[i + 1];
+		else if (ft_strcmp(av[i], "-h") == 0 && ft_isdigit(*av[i + 1]))
+			g_height = atoi(av[i + 1]);
+		else if (ft_strcmp(av[i], "-w") == 0 && ft_isdigit(*av[i + 1]))
+			g_width = atoi(av[i + 1]);
+		else
+		{
+			usage();
+			exit(1);
+		}
+	i += 2;
+	}
+}
+
+int				main(int ac, char **av)
 {
 	t_table		t;
 
 	g_row_counter = 0;
 	g_col_counter = 0;
+	g_filename = NULL;
+	g_width = TABLE_SIZE;
+	g_height = TABLE_SIZE;
+	if (ac > 7)
+		usage();
+	parse_arguments(ac, av);
 	init_table(&t);
-	if (ac == 2)
-	{
-		g_filename = av[1];
+	if (g_filename != NULL)
 		load_from_file(&t);
-	}
 	else
 		g_filename = "ft_db.csv";
 	while (1)
