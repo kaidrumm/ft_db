@@ -6,7 +6,7 @@
 /*   By: kdrumm <kdrumm@student.42.us>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 10:58:49 by kdrumm            #+#    #+#             */
-/*   Updated: 2017/05/05 13:51:18 by kdrumm           ###   ########.us       */
+/*   Updated: 2017/05/05 14:56:24 by kdrumm           ###   ########.us       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,11 +111,14 @@ void			add_record_from_file(t_table *t, int r, char **list, int option)
 		l = 1;
 	}
 	c = 0;
-	while (list[l])
+	while (list[l] && c < g_width)
 	{
 		if (t->column_ids[c] == 0)
-			ft_error("More content columns than headings."
+		{
+			printf("More content columns than headings. "
 				"I don't handle parens or quotes\n");
+			return ;
+		}
 		t->columns[c].content_array[r] = ft_strdup(list[l]);
 		c++;
 		l++;
@@ -131,9 +134,12 @@ void			add_record(t_table *t)
 
 	i = 0;
 	j = first_empty_row(t);
-	printf("Found an empty row at %i\n", j);
+	//printf("Found an empty row at %i\n", j);
 	if (j < 0)
-		ft_error("All rows are full\n");
+	{
+		printf("All rows are full\n");
+		return ;
+	}
 	t->row_ids[j] = id_gen_r();
 	while (i < g_width && t->column_ids[i] > 0)
 	{

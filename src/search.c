@@ -6,7 +6,7 @@
 /*   By: kdrumm <kdrumm@student.42.us>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 10:58:49 by kdrumm            #+#    #+#             */
-/*   Updated: 2017/05/05 11:11:57 by kdrumm           ###   ########.us       */
+/*   Updated: 2017/05/05 15:05:56 by kdrumm           ###   ########.us       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ void		search_query(t_table *t)
 	if (col_index == -1)
 		return ;
 	value = ask_user("Which value are you searching for?");
+	printf("Searching on column %s\n\n", t->columns[col_index].name);
 	print_headers(t, stdout);
-	printf("Searching on column %s\n", t->columns[col_index].name);
 	r = 0;
 	while (t->row_ids[r])
 	{

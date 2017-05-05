@@ -6,7 +6,7 @@
 /*   By: kdrumm <kdrumm@student.42.us>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 11:21:22 by kdrumm            #+#    #+#             */
-/*   Updated: 2017/05/05 13:53:13 by kdrumm           ###   ########.us       */
+/*   Updated: 2017/05/05 14:56:25 by kdrumm           ###   ########.us       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ char		*ask_user(char *question)
 	char	buffer[256];
 	char	*response;
 
+	// printf("ask user\n");
 	response = NULL;
 	bzero(buffer, sizeof(buffer));
 	ft_putendl(question);
@@ -38,6 +39,7 @@ char		*ask_user(char *question)
 	}
 	else
 		ft_error("Problem with fgets\n");
+	// printf("response was %s in ask_user\n", response);
 	return (response);
 }
 
@@ -45,9 +47,11 @@ int			ask_user_yn(char *question)
 {
 	char	*response;
 
+	// printf("ask yn\n");
 	while (1)
 	{
 		response = ask_user(question);
+		// printf("Response was %s\n", response);
 		if (strcmp(response, "Y") == 0 || strcmp(response, "yes") == 0 \
 			|| strcmp(response, "y") == 0 || strcmp(response, "Yes") == 0)
 			return (1);

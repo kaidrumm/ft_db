@@ -6,7 +6,7 @@
 /*   By: kdrumm <kdrumm@student.42.us>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 10:58:49 by kdrumm            #+#    #+#             */
-/*   Updated: 2017/05/05 13:52:57 by kdrumm           ###   ########.us       */
+/*   Updated: 2017/05/05 15:04:12 by kdrumm           ###   ########.us       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void		print_headers(t_table *t, FILE *fp)
 	if (!fp)
 		fp = stdout;
 	fd = fileno(fp);
-	ft_putstr_fd("\nID,", fd);
+	ft_putstr_fd("ID,", fd);
 	c = 0;
 	while (c < g_width && (t->column_ids[c] != 0))
 	{
@@ -67,7 +67,10 @@ void		print_table(t_table *t, int fd)
 	FILE		*output;
 
 	if (fd == 1)
+	{
+		ft_putchar('\n');
 		output = stdout;
+	}
 	else
 	{
 		output = fopen(g_filename, "w+");

@@ -6,7 +6,7 @@
 /*   By: kdrumm <kdrumm@student.42.us>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 10:58:57 by kdrumm            #+#    #+#             */
-/*   Updated: 2017/05/05 11:11:52 by kdrumm           ###   ########.us       */
+/*   Updated: 2017/05/05 15:09:33 by kdrumm           ###   ########.us       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ static int		first_empty_column(t_table *t)
 	int		i;
 
 	i = 0;
-	while (i < TABLE_SIZE)
+	while (i < g_width)
 	{
-		if (t->column_ids[i] == 0)
+		if (t->column_ids[i] == 0 || t->column_ids[i] == -1)
 			return (i);
 		i++;
 	}
@@ -80,8 +80,12 @@ void			add_column(t_table *t, char *name)
 	t_column	*col;
 
 	index = first_empty_column(t);
+	// printf("Adding column %s at %i\n", name, index);
 	if (index < 0)
-		ft_error("Table columns are full\n");
+	{
+		printf("Columns are full\n");
+		return ;
+	}
 	t->column_ids[index] = id_gen_c();
 	col = &(t->columns[index]);
 	col->name = name;
