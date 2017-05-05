@@ -6,13 +6,13 @@
 /*   By: kdrumm <kdrumm@student.42.us>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 11:21:22 by kdrumm            #+#    #+#             */
-/*   Updated: 2017/05/05 14:56:25 by kdrumm           ###   ########.us       */
+/*   Updated: 2017/05/05 15:25:03 by kdrumm           ###   ########.us       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_db.h"
 
-void		usage(void)
+void		usage(t_table *t)
 {
 	printf("\nUsage:\n"
 		"./ft_db -h -w -f\n"
@@ -20,7 +20,9 @@ void		usage(void)
 		"-w width (in integer range)\n"
 		"-f filename to load input from file\n\n"
 		"If you do not give height and width dimensions, default is 100\n"
-		"./ft_db with no parameters opens a blank spreadsheet.\n\n");
+		"./ft_db with no parameters opens a blank spreadsheet, \nwhich will "
+		"save as ft_db.csv and overwrite any file by that name.\n\n");
+	graceful_exit(t);
 }
 
 char		*ask_user(char *question)
@@ -78,7 +80,8 @@ void		menu(t_table *t)
 		"[6] Search by Value\n\t"
 		"[7] Print Table\n\t"
 		"[8] Save & Exit\n\t"
-		"[9] Help\n\t");
+		"[9] Help\n\t"
+		"[10] Flee\n\t");
 	option = atoi(fgets(buf, sizeof(buf), stdin));
 	if (option == 1)
 		add_column_details(t);
@@ -100,7 +103,9 @@ void		menu(t_table *t)
 		graceful_exit(t);
 	}
 	else if (option == 9)
-		usage();
+		usage(t);
+	else if (option == 10)
+		graceful_exit(t);
 	else
 		ft_putendl("Sorry, that option isn't covered yet\n");
 }

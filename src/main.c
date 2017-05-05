@@ -6,7 +6,7 @@
 /*   By: kdrumm <kdrumm@student.42.us>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 10:59:09 by kdrumm            #+#    #+#             */
-/*   Updated: 2017/05/05 15:09:56 by kdrumm           ###   ########.us       */
+/*   Updated: 2017/05/05 15:23:43 by kdrumm           ###   ########.us       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void			load_from_file(t_table *t)
 	fclose(file_ptr);
 }
 
-static void		parse_arguments(int ac, char **av)
+static void		parse_arguments(t_table *t, int ac, char **av)
 {
 	int			i;
 
@@ -80,7 +80,7 @@ static void		parse_arguments(int ac, char **av)
 	{
 		// printf("Checking av[%i]. av[i] is %s and av[i+1] is %s. *av[i+1] is %c\n", i, av[i], av[i + 1], *av[i+1]);
 		if (ft_strcmp(av[i], "-help") == 0)
-			usage();
+			usage(t);
 		else if (ft_strcmp(av[i], "-f") == 0)
 		{	
 			g_filename = ft_strdup(av[i + 1]);
@@ -98,7 +98,7 @@ static void		parse_arguments(int ac, char **av)
 		}
 		else
 		{
-			usage();
+			usage(t);
 			exit(1);
 		}
 	i += 2;
@@ -115,8 +115,8 @@ int				main(int ac, char **av)
 	g_width = TABLE_SIZE;
 	g_height = TABLE_SIZE;
 	if (ac > 7)
-		usage();
-	parse_arguments(ac, av);
+		usage(&t);
+	parse_arguments(&t, ac, av);
 	init_table(&t);
 	if (g_filename != NULL)
 		load_from_file(&t);
