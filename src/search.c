@@ -32,7 +32,7 @@ void		search_query(t_table *t)
 	while (t->row_ids[r])
 	{
 		printf("Comparing to value %s\n", t->columns[col_index].content_array[r]);
-		if (ft_strcmp(t->columns[col_index].content_array[r], value) == 0)
+		if (t->columns[col_index].content_array[r] != NULL && ft_strcmp(t->columns[col_index].content_array[r], value) == 0)
 			print_row(t, 1, r);
 		r++;
 	}

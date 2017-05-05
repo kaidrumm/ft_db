@@ -11,9 +11,10 @@ void		menu(t_table *t)
 		"[2] Add Record\n\t"
 		"[3] Update Value\n\t"
 		"[4] Delete Record\n\t"
-		"[5] Search by Value\n\t"
-		"[6] Print Table\n\t"
-		"[7] Exit");
+		"[5] Delete Column\n\t"
+		"[6] Search by Value\n\t"
+		"[7] Print Table\n\t"
+		"[8] Exit");
 	option = atoi(fgets(buf, sizeof(buf), stdin));
 	if (option == 1)
 		add_column_details(t);
@@ -24,10 +25,12 @@ void		menu(t_table *t)
 	else if (option == 4)
 		delete_record(t);
 	else if (option == 5)
-		search_query(t);
+		delete_column(t);
 	else if (option == 6)
-		print_table(t, 1);
+		search_query(t);
 	else if (option == 7)
+		print_table(t, 1);
+	else if (option == 8)
 	{
 		print_table(t, 4);
 		graceful_exit(t);

@@ -1,6 +1,19 @@
 #include "../includes/ft_db.h"
 
-int		find_matching_column(t_table *t, char *name)
+void			delete_column(t_table *t)
+{
+	char	*response;
+	int		c;
+
+	response = ask_user("Which column would you like to delete?\n");
+	c = find_matching_column(t, response);
+	if (c == -1)
+		return ;
+	t->column_ids[c] = -1;
+	fill_with_zeros(t, c);
+}
+
+int				find_matching_column(t_table *t, char *name)
 {
 	int		index;
 
@@ -32,12 +45,23 @@ static int		first_empty_column(t_table *t)
 	i = 0;
 	while (i < TABLE_SIZE)
 	{
-		//printf("Checking column %i\n", i);
 		if (t->column_ids[i] == 0)
 			return (i);
 		i++;
 	}
 	return (-1);
+}
+
+void			fill_with_zeros(t_table *t, int c)
+{
+	int		r;
+
+	r = 0;
+	while (t->row_ids[r])
+	{
+		t->columns[c].content_array[r] = "0";
+		r++;
+	}
 }
 
 void			add_column(t_table *t, char type, char *name)
@@ -63,4 +87,5 @@ void			add_column(t_table *t, char type, char *name)
 		col->content_array = malloc(sizeof(t_date) * TABLE_SIZE);
 	else
 		ft_error("Content type not available\n");
+	fill_with_zeros(t, index);
 }

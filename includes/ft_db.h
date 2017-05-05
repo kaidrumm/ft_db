@@ -41,11 +41,13 @@ typedef struct	s_table
 void			search_query(t_table *t);
 int				find_matching_record(t_table *t, int id);
 int				find_matching_column(t_table *t, char *name);
+void			delete_column(t_table *t);
 void			delete_record(t_table *t);
 void			update_value(t_table *t);
 void			graceful_exit(t_table *t);
 int				id_gen_c(void);
 int				id_gen_r(void);
+void			fill_with_zeros(t_table *t, int c);
 void			print_headers(t_table *t, FILE *fp);
 void			print_row(t_table *t, int fd, int r);
 void			print_table(t_table *t, int fd);

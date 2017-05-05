@@ -76,7 +76,8 @@ void			add_record_from_file(t_table *t, int r, char **list, int option)
 {
 	int		c;
 	int		l;
-	int		id;
+	long	id;
+	char	*errptr;
 
 	printf("Adding record %i, option %i\n", r, option);
 	if (option == 0)
@@ -86,6 +87,13 @@ void			add_record_from_file(t_table *t, int r, char **list, int option)
 	}
 	else
 	{
+		printf("list[0] is %s\n", list[0]);
+		id = strtol(list[0], &errptr, 10);
+		printf("Now ID is %lu, list[0] is %s and errptr is %s\n", id, list[0], errptr);
+		if (errptr == list[0])
+		    ft_error("Invalid ID format, please use only digits\n");
+		else if (*errptr != '\0')
+			ft_error("ID out of range\n");
 		id = ft_atoi(list[0]);
 		t->row_ids[r] = id;
 		if (id > g_row_counter)
