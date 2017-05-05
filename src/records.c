@@ -72,26 +72,32 @@ static int		first_empty_row(t_table *t)
 	return (-1);
 }
 
-void			add_record_from_file(t_table *t, int r, char **list, char *option)
+void			add_record_from_file(t_table *t, int r, char **list, int option)
 {
 	int		c;
 	int		l;
+	int		id;
 
-	printf("Adding record %i\n", r);
-	if (!ft_strcmp(option, "N"))
+	printf("Adding record %i, option %i\n", r, option);
+	if (option == 0)
 	{
 		t->row_ids[r] = id_gen_r();
 		l = 0;
 	}
-	else 
+	else
 	{
-		t->row_ids[r] = ft_atoi(list[0]);
+		id = ft_atoi(list[0]);
+		t->row_ids[r] = id;
+		if (id > g_row_counter)
+			g_row_counter = id;
 		l = 1;
 	}
 	printf("Assigned ID %i to row %i\n", t->row_ids[r], r);
 	c = 0;
 	while (list[l])
 	{
+		if (t->column_ids[c] == 0)
+			ft_error("More content columns than headings, I don't handle parens or quotes\n");
 		t->columns[c].content_array[r] = ft_strdup(list[l]);
 		printf("Assigned %s to %i, %i\n", t->columns[c].content_array[r], r, c);
 		c++;

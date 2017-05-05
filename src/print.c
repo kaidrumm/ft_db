@@ -8,6 +8,7 @@ void		print_headers(t_table *t, FILE *fp)
 	if (!fp)
 		fp = stdout;
 	fd = fileno(fp);
+	ft_putstr_fd("ID,", fd);
 	c = 0;
 	while (c < TABLE_SIZE && (t->column_ids[c] != 0))
 	{

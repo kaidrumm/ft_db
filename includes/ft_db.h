@@ -34,6 +34,7 @@ typedef struct	s_table
 {
 	int			row_ids[TABLE_SIZE];
 	int			column_ids[TABLE_SIZE];
+	// int			primary_key_col_index;
 	t_column	*columns;
 }				t_table;
 
@@ -51,11 +52,12 @@ void			print_table(t_table *t, int fd);
 void			init_table(t_table *t);
 void 			add_column_details(t_table *t);
 void			add_column(t_table *t, char type, char *name);
-void			add_record_from_file(t_table *t, int r, char **list, char *option);
+void			add_record_from_file(t_table *t, int r, char **list, int option);
 //void			add_record_details(t_table *t);
 void			add_record(t_table *t);
 char			*ask_user(char *question);
+int				ask_user_yn(char *question);
 void			menu(t_table *t);
-void			load_from_file(t_table *t, char *option);
+void			load_from_file(t_table *t);
 
 #endif

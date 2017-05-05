@@ -32,7 +32,7 @@ static int		first_empty_column(t_table *t)
 	i = 0;
 	while (i < TABLE_SIZE)
 	{
-		printf("Checking column %i\n", i);
+		//printf("Checking column %i\n", i);
 		if (t->column_ids[i] == 0)
 			return (i);
 		i++;
@@ -45,11 +45,11 @@ void			add_column(t_table *t, char type, char *name)
 	int			index;
 	t_column	*col;
 
-	printf("Add column %s\n", name);
 	index = first_empty_column(t);
 	if (index < 0)
 		ft_error("Table columns are full\n");
 	t->column_ids[index] = id_gen_c();
+	printf("Add column %s with id %i\n", name, t->column_ids[index]);
 	col = &(t->columns[index]);
 	col->content_type = type;
 	col->name = name;

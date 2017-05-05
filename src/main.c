@@ -1,22 +1,5 @@
 #include "../includes/ft_db.h"
 
-char		*ask_user(char *question)
-{
-	char	buffer[256];
-	char	*response;
-
-	response = NULL;
-	bzero(buffer, sizeof(buffer));
-	ft_putendl(question);
-	if (fgets(buffer, sizeof(buffer), stdin))
-	{
-		response = strdup(buffer);
-		response = strsep(&response, "\n");
-	}
-	else
-		ft_error("Problem with fgets\n");
-	return (response);
-}
 
 void		menu(t_table *t)
 {
@@ -53,20 +36,29 @@ void		menu(t_table *t)
 		ft_putendl("Sorry, that option isn't covered yet\n");
 }
 
-void		load_from_file(t_table *t, char *option)
+void		load_from_file(t_table *t)
 {
 	FILE	*file_ptr;
 	char	*line;
 	char 	**list;
+	int		option;
 	int		r;
 	int		c;
 
 	if (!(file_ptr = fopen(g_filename, "r+")))
 		ft_error("Error opening file\n");
+	option = ask_user_yn("Does this sheet have an ID column on the left? Y or N\n");
+	printf("I heard option %i\n", option);
+	if (option == 0)
+	{
+		printf("We will generate the primary key for you.\n");
+		c = 0;
+	}
+	else
+		c = 1;
 	if (get_next_line(fileno(file_ptr), &line))
 	{
 		list = ft_strsplit(line, ',');
-		c = 0; // Skip ID column
 		while (list[c])
 		{
 			add_column(t, 's', list[c]);
@@ -81,6 +73,7 @@ void		load_from_file(t_table *t, char *option)
 		add_record_from_file(t, r, list, option);
 		r++;
 	}
+	//g_row_counter = r;
 	fclose(file_ptr);
 }
 
@@ -94,12 +87,7 @@ int			main(int ac, char **av)
 	if (ac == 2)
 	{
 		g_filename = av[1];
-		load_from_file(&t, "N");
-	}
-	if (ac == 3)
-	{
-		g_filename = av[1];
-		load_from_file(&t, av[2]);
+		load_from_file(&t);
 	}
 	else
 		g_filename = "ft_db.csv";
